@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Counter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            gap: 2rem;
+            background-color: transparent;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 16px;
+            padding: 0;
+            background: none;
+            box-shadow: none;
+        }
+
+        h2 {
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
+        .counter-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .counter {
+            font-size: 16px;
+        }
+
+        .percentage {
+            font-size: 16px;
+        }
+
+        .change {
+            margin-left: 0.25rem;
+            font-size: 16px;
+        }
+
+        .positive {
+            color: #2ecc71;
+        }
+
+        .neutral {
+            color: #e74c3c;
+        }
+
+        .arrow {
+            font-size: 1.2rem;
+        }
+
+        .dash {
+            font-weight: bold;
+        }
+    </style>
+
+
+    <div class="container">
+        <div class="stat-card">
+            <h2>Gallup Annual Employee Engagement:</h2>
+            <div class="counter-wrapper">
+                <span>US:</span>
+                <span class="counter" data-target="33">0</span>
+                <span class="percentage">%</span>
+                <div class="change positive">
+                    <span class="arrow">↑</span>
+                    <span>1%</span>
+                </div>
+                <span style="margin-left: 1rem">Global:</span>
+                <span class="counter" data-target="23">0</span>
+                <span class="percentage">%</span>
+                <div class="change neutral">
+                    <span class="dash">--</span>
+                </div>
+                <span style="margin-left: 1rem">Best-Practice Organizations:</span>
+                <span class="counter" data-target="70">0</span>
+                <span class="percentage">%</span>
+                <div class="change neutral">
+                    <span class="arrow">↓</span>
+                    <span>2%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = document.querySelectorAll('.counter');
+            const speed = 50; // Reduced for faster animation
+
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = Math.ceil(target / speed); // Use Math.ceil to ensure we always increment by at least 1
+
+                const updateCount = () => {
+                    const count = parseInt(counter.innerText);
+                    
+                    if (count < target) {
+                        counter.innerText = Math.min(count + increment, target);
+                        requestAnimationFrame(updateCount); // Using requestAnimationFrame for smoother animation
+                    }
+                };
+
+                updateCount();
+            });
+        });
+    </script>
